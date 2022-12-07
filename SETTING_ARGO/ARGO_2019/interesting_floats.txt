@@ -1,0 +1,11 @@
+with chl and nitrate
+
+6902903 west
+lon 12.36171
+lat 39.35943
+
+6901772 east
+lon 20.75233
+lat 35.62733
+
+

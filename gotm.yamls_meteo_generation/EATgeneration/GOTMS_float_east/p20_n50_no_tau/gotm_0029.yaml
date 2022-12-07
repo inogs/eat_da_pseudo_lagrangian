@@ -1,0 +1,425 @@
+version: 6
+title: iGOTM simulation
+location:
+  name: iGOTM station
+  latitude: 35.62733
+  longitude: 20.75233
+  depth: 2877.3
+time:
+  start: 2019-01-01 00:00:00
+  stop: 2019-12-31 18:00:00
+  dt: 600.0
+grid:
+  nlev: 201
+  method: file_sigma
+  ddu: 1.0
+  ddl: 1.0
+  file: grid.dat
+temperature:
+  method: file
+  constant_value: 0.0
+  file: tprof.dat
+  column: 1
+  two_layer:
+    z_s: 0.0
+    t_s: 0.0
+    z_b: 0.0
+    t_b: 0.0
+  NN: 0.0
+  relax:
+salinity:
+  method: file
+  constant_value: 0.0
+  file: sprof.dat
+  column: 1
+  two_layer:
+    z_s: 0.0
+    s_s: 0.0
+    z_b: 0.0
+    s_b: 0.0
+  NN: 0.0
+  relax:
+surface:
+  fluxes:
+    method: fairall
+    heat:
+      method: constant
+      constant_value: 0.0
+      file:
+      column: 1
+    tx:
+      method: constant
+      constant_value: 0.0
+      file:
+      column: 1
+    ty:
+      method: constant
+      constant_value: 0.0
+      file:
+      column: 1
+  u10:
+    method: file
+    constant_value: 0.0
+    file: meteo.dat
+    column: 1
+    scale_factor: 1.1623157300848894
+  v10:
+    method: file
+    constant_value: 0.0
+    file: meteo.dat
+    column: 2
+    scale_factor: 1.2531180011775516
+  airp:
+    method: file
+    constant_value: 0.0
+    file: meteo.dat
+    column: 3
+    scale_factor: 100.0
+  airt:
+    method: file
+    constant_value: 0.0
+    file: meteo.dat
+    column: 4
+  hum:
+    method: file
+    constant_value: 0.0
+    file: meteo.dat
+    column: 5
+    type: dew_point
+  cloud:
+    method: file
+    constant_value: 0.0
+    file: meteo.dat
+    column: 6
+  precip:
+    method: file
+    constant_value: 0.0
+    file: precip.dat
+    column: 1
+    flux_impact: true
+  calc_evaporation: true
+  swr:
+    method: calculate
+    constant_value: 0.0
+    file:
+    column: 1
+  longwave_radiation:
+    method: clark
+    file:
+    column: 1
+  albedo:
+    method: payne
+    constant_value: 0.0
+  roughness:
+    charnock: false
+    charnock_val: 1400.0
+    z0s_min: 0.02
+bottom:
+  h0b: 0.005
+light_extinction:
+  method: jerlov-i
+  A:
+    method: constant
+    constant_value: 0.7
+    file:
+    column: 1
+  g1:
+    method: constant
+    constant_value: 0.4
+    file:
+    column: 1
+  g2:
+    method: constant
+    constant_value: 8.0
+    file:
+    column: 1
+turbulence:
+  turb_method: second_order
+  tke_method: tke
+  len_scale_method: dissipation
+  stab_method: schumann_gerz
+  turb_param:
+    cm0_fix: 0.5477
+    Prandtl0_fix: 0.74
+    cw: 100.0
+    compute_kappa: false
+    kappa: 0.4
+    compute_c3: true
+    Ri_st: 0.25
+    length_lim: true
+    galp: 0.27
+    const_num: 0.0005
+    const_nuh: 0.0005
+    k_min: 1.0e-06
+    eps_min: 1.0e-12
+    kb_min: 1.0e-10
+    epsb_min: 1.0e-14
+mimic_3d:
+  ext_pressure:
+    type: elevation
+    dpdx:
+      method: file
+      constant_value: 0.0
+      file: ext_press.dat
+      column: 2
+      tidal:
+        amp_1: 0.0
+        phase_1: 0.0
+        amp_2: 0.0
+        phase_2: 0.0
+    dpdy:
+      method: file
+      constant_value: 0.0
+      file: ext_press.dat
+      column: 3
+      tidal:
+        amp_1: 0.0
+        phase_1: 0.0
+        amp_2: 0.0
+        phase_2: 0.0
+    h:
+      method: file
+      constant_value: 0.0
+      file: ext_press.dat
+      column: 1
+    period_1: 44714.0
+    period_2: 43200.0
+  int_press:
+    dtdx:
+      method: off
+      constant_value: 0.0
+      file:
+      column: 1
+    dtdy:
+      method: off
+      constant_value: 0.0
+      file:
+      column: 1
+    dsdx:
+      method: off
+      constant_value: 0.0
+      file:
+      column: 1
+    dsdy:
+      method: off
+      constant_value: 0.0
+      file:
+      column: 1
+    t_adv: false
+    s_adv: false
+  zeta:
+    method: constant
+    constant_value: 0.0
+    file: zeta.dat
+    column: 1
+    tidal:
+      period_1: 44714.0
+      amp_1: 0.0
+      phase_1: 0.0
+      period_2: 43200.0
+      amp_2: 0.0
+      phase_2: 0.0
+  w:
+    max:
+      method: off
+      constant_value: 0.0
+      file:
+      column: 1
+    height:
+      method: constant
+      constant_value: 0.0
+      file:
+      column: 1
+    adv_discr: p2_pdm
+fabm:
+  use: true
+  freshwater_impact: true
+  feedbacks:
+    shade: false
+    albedo: false
+    surface_drag: false
+  repair_state: true
+  input:
+    mole_fraction_of_carbon_dioxide_in_air:
+      method: file
+      constant_value: 395.0
+      file: pco2a.txt
+      column: 1
+    N1/p:
+      method: file
+      constant_value: 0.4
+      file: ICfromREA/N1p.prof
+      column: 1
+    N3/n:
+      method: file
+      constant_value: 4.0
+      file: ICfromREA/N3n.prof
+      column: 1
+    N4/n:
+      method: file
+      constant_value: 4.0
+      file: ICfromREA/N4n.prof
+      column: 1
+    N5/s:
+      method: file
+      constant_value: 4.0
+      file: ICfromREA/N5s.prof
+      column: 1
+    O2/o:
+      method: file
+      constant_value: 220.0
+      file: ICfromREA/O2o.prof
+      column: 1
+    O3h/h:
+      method: file
+      constant_value: 2500.0
+      file: ICfromREA/O3h.prof
+      column: 1
+    O3/c:
+      method: file
+      constant_value: 25000.0
+      file: ICfromREA/O3c.prof
+      column: 1
+    P1/c:
+      method: file
+      constant_value: 10.0
+      file: ICfromREA/P1c.prof
+      column: 1
+    P1/Chl:
+      method: file
+      constant_value: 10.0
+      file: ICfromREA/P1l.prof
+      column: 1
+    P1/n:
+      method: file
+      constant_value: 10.0
+      file: ICfromREA/P1n.prof
+      column: 1
+    P1/p:
+      method: file
+      constant_value: 10.0
+      file: ICfromREA/P1p.prof
+      column: 1
+    P1/s:
+      method: file
+      constant_value: 10.0
+      file: ICfromREA/P1s.prof
+      column: 1
+    P2/c:
+      method: file
+      constant_value: 10.0
+      file: ICfromREA/P2c.prof
+      column: 1
+    P2/Chl:
+      method: file
+      constant_value: 10.0
+      file: ICfromREA/P2l.prof
+      column: 1
+    P2/n:
+      method: file
+      constant_value: 10.0
+      file: ICfromREA/P2n.prof
+      column: 1
+    P2/p:
+      method: file
+      constant_value: 10.0
+      file: ICfromREA/P2p.prof
+      column: 1
+    P3/Chl:
+      method: file
+      constant_value: 10.0
+      file: ICfromREA/P3l.prof
+      column: 1
+    P3/n:
+      method: file
+      constant_value: 10.0
+      file: ICfromREA/P3n.prof
+      column: 1
+    P3/p:
+      method: file
+      constant_value: 10.0
+      file: ICfromREA/P3p.prof
+      column: 1
+    P4/c:
+      method: file
+      constant_value: 10.0
+      file: ICfromREA/P4c.prof
+      column: 1
+    P4/Chl:
+      method: file
+      constant_value: 10.0
+      file: ICfromREA/P4l.prof
+      column: 1
+    P4/n:
+      method: file
+      constant_value: 10.0
+      file: ICfromREA/P4n.prof
+      column: 1
+    P4/p:
+      method: file
+      constant_value: 10.0
+      file: ICfromREA/P4p.prof
+      column: 1
+    R1/c:
+      method: file
+      constant_value: 0.01
+      file: ICfromREA/R1c.prof
+      column: 1
+    R1/n:
+      method: file
+      constant_value: 0.01
+      file: ICfromREA/R1n.prof
+    R1/p:
+      method: file
+      constant_value: 0.01
+      file: ICfromREA/R1p.prof
+      column: 1
+    R2/c:
+      method: file
+      constant_value: 0.01
+      file: ICfromREA/R2c.prof
+      column: 1
+    R3/c:
+      method: file
+      constant_value: 0.01
+      file: ICfromREA/R3c.prof
+      column: 1
+    R6/c:
+      method: file
+      constant_value: 0.01
+      file: ICfromREA/R6c.prof
+      column: 1
+    R6/n:
+      method: file
+      constant_value: 0.01
+      file: ICfromREA/R6n.prof
+      column: 1
+    R6/p:
+      method: file
+      constant_value: 0.01
+      file: ICfromREA/R6p.prof
+      column: 1
+    R6/s:
+      method: file
+      constant_value: 0.01
+      file: ICfromREA/R6s.prof
+      column: 1
+eq_state:
+  method: jackett
+  form: full-pot
+  linear:
+    T0: 10.0
+    S0: 35.0
+    p0: 0.0
+    dtr0: -0.17
+    dsr0: 0.78
+restart:
+  load: true
+output:
+  result:
+    format: netcdf
+    time_unit: day
+    time_step: 1
+    time_method: mean
+    variables:
+    - source: *

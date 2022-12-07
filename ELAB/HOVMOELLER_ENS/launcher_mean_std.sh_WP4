@@ -1,0 +1,34 @@
+
+DIRNAME=float_east
+SETUP=ESTKF_n50_T_S
+SETUP=ESTKF_n50_T_S_Nut
+SETUP=ESTKF_n50_T_S_Nplugin
+SETUP=ENS_n50_floatsal_p20
+INDIR=/g100_scratch/userexternal/ateruzzi/EAT_DA/WP4_tests/$DIRNAME/$SETUP/
+#INFILE=$INDIR/result.nc
+
+OUTBASE=WP4_tests/
+OUTDIR=$OUTBASE/$DIRNAME/$SETUP/
+mkdir -p $OUTDIR
+
+VAR=N3_n # Naming should be as in result.nc
+
+DEPTH=300 # Optionally, a depth limit can be added
+          # default is 300 m
+
+#AGGVAR=P_Chl # Naming should be composed by the name of the group
+AGGVAR=P_run # Naming should be composed by the name of the group
+     # to be aggregated
+     # (P for phyto, Z for zoo, B for bacteria, etc.)
+     # and by the name of componenent 
+     # (Chl for chlorophyl, c for carbon, etc.)
+
+# examples
+# -> To plot N1_p
+#echo python plot_hovmoeller_ens.py -i $INDIR -o $OUTDIR -v $VAR 
+# -> To do the same plot untill deplim
+echo python plot_hovmoeller_mean_std.py -i $INDIR -o $OUTDIR -v $VAR -d $DEPTH
+
+# -> To plot the total phyto chl
+echo python plot_hovmoeller_mean_std.py -i $INDIR -o $OUTDIR -g $AGGVAR -d $DEPTH
+
