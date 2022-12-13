@@ -21,7 +21,7 @@ grid:
 temperature:                        # temperature profile used for initialization and optionally relaxation [Celsius]
    method: file                     # method [off, file=from file, constant, two_layer=two layers with linear gradient in between, buoyancy=from salinity and buoyancy frequency; default=off]
    constant_value: 0.0              # value to use throughout the simulation [Celsius; default=0.0]
-   file: tprof.dat                  # path to file with series of profiles [default=]
+   file: profile_TEMP.nudg          # path to file with series of profiles [default=]
    column: 1                        # index of column to read from [default=1]
    two_layer:
       z_s: 0.0                      # depth where upper layer ends [m; min=0.0; default=0.0]
@@ -34,7 +34,7 @@ temperature:                        # temperature profile used for initializatio
 salinity:                           # salinity profile used for initialization and optionally relaxation [psu]
    method: file                     # method [off, file=from file, constant, two_layer=two layers with linear gradient in between, buoyancy=from temperature and buoyancy frequency; default=off]
    constant_value: 0.0              # value to use throughout the simulation [psu; min=0.0; default=0.0]
-   file: sprof.dat                  # path to file with series of profiles [default=]
+   file: profile_PSAL.nudg          # path to file with series of profiles [default=]
    column: 1                        # index of column to read from [default=1]
    two_layer:
       z_s: 0.0                      # depth where upper layer ends [m; min=0.0; default=0.0]
@@ -413,6 +413,11 @@ fabm:                               # Framework for Aquatic Biogeochemical Model
          method: file                # method [constant, file=from file; default=constant]
          constant_value: 0.01     # value to use throughout the simulation [m/s; default=0.0]
          file: ICfromREA/R6s.prof               # path to file with time series [default=]
+         column: 1                   # index of column to read from [default=1]
+      X3/c:
+         method: file                # method [constant, file=from file; default=constant]
+         constant_value: 0.01        # value to use throughout the simulation [m/s; default=0.0]
+         file: ICfromREA/R3l.prof    # path to file with time series [default=]
          column: 1                   # index of column to read from [default=1]
 eq_state:                           # equation of state
    method: jackett                  # method [unesco, jackett=Jackett et al. (2005); default=jackett]

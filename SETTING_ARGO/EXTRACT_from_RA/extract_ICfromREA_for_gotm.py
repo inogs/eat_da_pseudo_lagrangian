@@ -107,9 +107,9 @@ varLIST = [ # check initial value ask Anna
     'P2c','P2l','P2n','P2p',
     'P3c','P3l','P3n','P3p',
     'P4c','P4l','P4n','P4p',
-    'R1c','R1n','R1p','X1c',
-    'R2c','X2c',
-    'R3c','X3c',
+    'R1c','R1n','R1p','R1l',
+    'R2c','R2l',
+    'R3c','R3l',
     'R6c','R6p','R6n','R6s',
 ]
 
