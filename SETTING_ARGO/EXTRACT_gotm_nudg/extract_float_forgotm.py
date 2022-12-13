@@ -96,7 +96,8 @@ for pp in Allprofiles:
         # break
 
 
-fileout = OUTDIR + '/profile_' + var + '.obs'
+#fileout = OUTDIR + '/profile_' + var + '.obs'
+fileout = OUTDIR + '/profile_' + var + '.nudg'
 f = open(fileout,'w')
 
 f.writelines(LINES)

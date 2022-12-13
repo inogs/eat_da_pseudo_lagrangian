@@ -1,16 +1,17 @@
 #! /bin/bash
 
 
-DATE=20190101
-INREA=/g100_scratch/userexternal/ateruzzi/EAT_DA/SETTING_ARGO/EXTRACT_from_RA/RA_24/RESTARTS/$DATE/
-MASKFILE=RA_24/meshmask.nc
-FILEZ=/g100/home/userexternal/ateruzzi/seamless-notebooks/setups/float_east/grid.dat
+WORKING_DIR=$1
+DATE=$2
+INREA=/g100_work/OGS_devC/V9C/RUNS_SETUP/PREPROC/IC/RST_2019_R3c/
+MASKFILE=/g100_work/OGS_devC/V10C/RUNS_SETUP/run3.1/wrkdir/MODEL/meshmask.nc
+FILEZ=${WORKING_DIR}/grid.dat
 
-LON=12.36
-LAT=39.36
-DEPTH=3485.2
+LON=12.36 # eliminare
+LAT=39.36 # eliminare
+DEPTH=3485.2 #<-- Check Guido
 
-OUTDIR=OUTPROF/P${LON}_${LAT}_${DATE}/
+OUTDIR=${WORKING_DIR}/ICfromREA/
 mkdir -p $OUTDIR
 
-echo python extract_ICfromREA_for_gotm.py -i $INREA -n $LON -t $LAT -o $OUTDIR -d $DATE -m $MASKFILE -z $FILEZ -p $DEPTH
+python extract_ICfromREA_for_gotm.py -i $INREA -n $LON -t $LAT -o $OUTDIR -d $DATE -m $MASKFILE -z $FILEZ -p $DEPTH
