@@ -36,10 +36,10 @@ for ((i=0;i<N_float; i++)); do
 
 #extract initial conditions from reanalysis
     cd $BASE_DIR/SETTING_ARGO/EXTRACT_from_RA/
-    bash launcher.sh $WRKDIR $START
+    bash launcher.sh ${WRKDIR} ${START} ${END__} ${float}
 
 #copy meteo file from ERA5
-    cp /g100_work/IscrB_3DSBM/gocchipinti/FLOAT/meteo.${float}.dat $WRKDIR/meteo.dat
-    cp /g100_work/IscrB_3DSBM/gocchipinti/FLOAT/precip.${float}.dat $WRKDIR/precip.dat
+    cp /g100_work/IscrB_3DSBM/gocchipinti/FLOAT/meteo.${float}.dat ${WRKDIR}/meteo.dat
+    cp /g100_work/IscrB_3DSBM/gocchipinti/FLOAT/precip.${float}.dat ${WRKDIR}/precip.dat
 
 done
