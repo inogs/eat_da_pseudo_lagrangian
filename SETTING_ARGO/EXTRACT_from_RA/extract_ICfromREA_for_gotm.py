@@ -99,21 +99,18 @@ depth = float(args.depth)
 datet = datetime.datetime.strptime(datestr,'%Y%m%d')
 datestrgotm = datet.strftime('%Y-%m-%d %H:%M:%S')
 
-varLIST = [ # check initial value ask Anna
-#    'N1p',
-    'O2o','O3h','O3c',
+varLIST = ['O2o','O3h','O3c',
     'N1p','N3n','N4n','N5s',
     'P1c','P1l','P1n','P1p','P1s',
     'P2c','P2l','P2n','P2p',
     'P3c','P3l','P3n','P3p',
     'P4c','P4l','P4n','P4p',
-    'R1c','R1n','R1p','R1l',
-    'R2c','R2l',
+    'R1c','R1n','R1p',
+    'R2c',
     'R3c','R3l',
-    'R6c','R6p','R6n','R6s',
-]
+    'R6c','R6p','R6n','R6s']
 
-
+print(varLIST)
 DICTvar = {}
 for var in varLIST:
     DICTvar[var] = []
@@ -158,6 +155,7 @@ for var in varLIST:
         LINES.append(line)
 
     fileout = OUTDIR + '/' + var + '.prof'
+    print(fileout)
     f = open(fileout,'w')
     f.writelines(LINES)
     f.close()
