@@ -30,7 +30,7 @@ temperature:                        # temperature profile used for initializatio
       t_b: 0.0                      # lower layer temperature [Celsius; min=0.0; max=40.0; default=0.0]
    NN: 0.0                          # square of buoyancy frequency [s^-2; min=0.0; default=0.0]
    relax:                           # relax model temperature to observed/prescribed value
-      tau: 3.15000000E+07           # time scale for interior layer [s; min=0.0; default=1.00000000E+15]
+      tau: 2592000                  # 1 month time scale for interior layer [s; min=0.0; default=1.00000000E+15]
 salinity:                           # salinity profile used for initialization and optionally relaxation [psu]
    method: file                     # method [off, file=from file, constant, two_layer=two layers with linear gradient in between, buoyancy=from temperature and buoyancy frequency; default=off]
    constant_value: 0.0              # value to use throughout the simulation [psu; min=0.0; default=0.0]
@@ -43,7 +43,7 @@ salinity:                           # salinity profile used for initialization a
       s_b: 0.0                      # lower layer salinity [psu; min=0.0; max=40.0; default=0.0]
    NN: 0.0                          # square of buoyancy frequency [s^-2; min=0.0; default=0.0]
    relax:                           # relax model salinity to observed/prescribed value
-      tau: 3.15000000E+07           # time scale for interior layer [s; min=0.0; default=1.00000000E+15]
+      tau: 2592000                  # 1 month time scale for interior layer [s; min=0.0; default=1.00000000E+15]
 surface:
    fluxes:                          # heat and momentum fluxes
       method: fairall               # method to calculate fluxes from meteorological conditions [off=use prescribed fluxes, kondo=Kondo (1975), fairall=Fairall et al. (1996); default=off]
