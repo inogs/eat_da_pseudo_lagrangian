@@ -43,4 +43,9 @@ for ((i=0;i<N_float; i++)); do
     cp /g100_work/IscrB_3DSBM/gocchipinti/FLOAT/meteo.${float}.dat ${WRKDIR}/meteo.dat
     cp /g100_work/IscrB_3DSBM/gocchipinti/FLOAT/precip.${float}.dat ${WRKDIR}/precip.dat
 
+#create fabm file with initial parameters
+    cd $BASE_DIR/FABM_YAML_SPINUP_GENARATION
+    bash crea_param_1D.sh 1
+    mv fabm_0001.yaml $WRKDIR/fabm.yaml
+
 done
