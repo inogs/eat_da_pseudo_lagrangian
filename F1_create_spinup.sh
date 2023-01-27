@@ -15,13 +15,14 @@ END__=20200101
 START_NUDG=20180101
 END___NUDG=20210101
 
+rm spinup_folder_list.txt # clean list of folders
 
 for ((i=0;i<N_float; i++)); do
     cd $BASE_DIR
     echo ${float_list[${i}]}
     float=${float_list[${i}]}
 
-    WRKDIR=${SPINUP_FOLDER}/${float}_spinup
+    WRKDIR=${SPINUP_FOLDER}/${float}_spinup_F1
     echo $WRKDIR >> spinup_folder_list.txt
 
 # create spiunp folder for each float
@@ -48,4 +49,7 @@ for ((i=0;i<N_float; i++)); do
     bash crea_param_1D.sh 1
     mv fabm_0001.yaml $WRKDIR/fabm.yaml
 
+# copy the correct gotm.yaml
+    cd $WRKDIR
+    cp gotm.yaml_spinup_F1 gotm.yaml
 done
