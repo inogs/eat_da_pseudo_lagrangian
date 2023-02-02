@@ -1,10 +1,10 @@
 #! /bin/bash
 
 #SBATCH --job-name=EAT_ENSEMBLE
-#SBATCH -N1 -n 2
-#SBATCH --ntasks-per-node=2
+#SBATCH -N2
+#SBATCH --ntasks-per-node=25
 #SBATCH --time=2:00:00
-#SBATCH --mem=5gb
+#SBATCH --mem=300gb
 #SBATCH --account=icei_Rosati
 #SBATCH --partition=g100_usr_prod
 #SBATCH --mail-type=ALL
@@ -29,6 +29,6 @@ IFS=$'\r\n' GLOBIGNORE='*' command eval  'ensemble_folder_list=($(cat ensemble_F
 
 cd ${ensemble_folder_list[${SLURM_ARRAY_TASK_ID}]}
 
-mpiexec -n 2 eat_model_gotm --separate_gotm_yaml
+mpirun -n 50 eat_model_gotm --separate_gotm_yaml #--separate_restart_file
 
 date

@@ -25,12 +25,18 @@ for ((i=0;i<N_float; i++)); do
     WRKDIR=${SPINUP_FOLDER}/${float}_spinup_F1
     echo $WRKDIR >> spinup_folder_list.txt
 
-# create spiunp folder for each float
-    cp -r template_setup_spinup  $WRKDIR
+# clean and create spiunp folder for each float
+    rm -rf $WRKDIR
+    cp -r template_setup_spinup $WRKDIR
 
 #extract profile from float as observation files
     cd $BASE_DIR/SETTING_ARGO/EXTRACT_PROFILES/
     bash launcher.sh ${float} ${START} ${END__} $WRKDIR
+
+#extract sat data along float track as observation files
+    cd $BASE_DIR/SETTING_SAT/EXTRACT_DATA/
+    bash launcher.sh ${float} $WRKDIR
+#   bash launcher.sh ${float} ${START} ${END__} $WRKDIR
 
 #extract profile from float as nudging files
     cd $BASE_DIR/SETTING_ARGO/EXTRACT_gotm_nudg/

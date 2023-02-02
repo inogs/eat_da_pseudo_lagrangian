@@ -442,4 +442,4 @@ output:
       variables:
 #     - source: temp
 #     - source: N1_p
-#     - source: *                   # variable name in model
+      - source: \*                   # variable name in model

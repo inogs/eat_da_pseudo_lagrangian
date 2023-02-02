@@ -1,4 +1,5 @@
 #! /bin/bash
+#conda activate eat
 BASE_DIR=$PWD
 
 SPINUP_FOLDER=$CINECA_SCRATCH/WP6_TEST
@@ -7,7 +8,7 @@ mkdir -p ${SPINUP_FOLDER}
 declare -a float_list 
 float_list=('6902903' '6901772')
 N_float=${#float_list[@]}
-N_ENSEMBLE=2
+N_ENSEMBLE=50
 
 START=20190101
 END__=20200101
@@ -35,7 +36,9 @@ for ((i=0;i<N_float; i++)); do
     cd $WRKDIR
     cp gotm.yaml_ensemble_F2 gotm.yaml
     eat-gotm-gen yaml gotm.yaml ${N_ENSEMBLE} -f fabm/yaml_file
-    cp ${BASE_DIR}/run_parameter_assimilation.py .
+    cp ${BASE_DIR}/runESTKF.py .
 
 
 done
+
+#conda deactivate

@@ -1,10 +1,10 @@
 #! /bin/bash
 
 #SBATCH --job-name=EAT_ASSIMILATION
-#SBATCH -N1 -n 2
-#SBATCH --ntasks-per-node=2
+#SBATCH -N2 
+#SBATCH --ntasks-per-node=25
 #SBATCH --time=2:00:00
-#SBATCH --mem=5gb
+#SBATCH --mem=300gb
 #SBATCH --account=icei_Rosati
 #SBATCH --partition=g100_usr_prod
 #SBATCH --mail-type=ALL
@@ -26,9 +26,12 @@ date
 conda activate eat
 
 IFS=$'\r\n' GLOBIGNORE='*' command eval  'assimilation_folder_list=($(cat assimilation_F3_folder_list.txt))'
+IFS=$'\r\n' GLOBIGNORE='*' command eval  'ensemble_folder_list=($(cat ensemble_F2_folder_list.txt))'
 
 cd ${assimilation_folder_list[${SLURM_ARRAY_TASK_ID}]}
 
-mpiexec -n 1 python run_parameter_assimilation.py : -n 2 eat-gotm --separate_gotm_yaml --separate_restart_file
+cp ${ensemble_folder_list[${SLURM_ARRAY_TASK_ID}]}/restart_????.nc ${assimilation_folder_list[${SLURM_ARRAY_TASK_ID}]}/
+
+mpiexec -n 1 python runESTKF.py : -n 50 eat-gotm --separate_gotm_yaml --separate_restart_file
 
 date
