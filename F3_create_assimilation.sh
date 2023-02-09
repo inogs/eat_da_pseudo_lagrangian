@@ -8,7 +8,7 @@ mkdir -p ${SPINUP_FOLDER}
 declare -a float_list 
 float_list=('6902903' '6901772')
 N_float=${#float_list[@]}
-N_ENSEMBLE=50
+N_ENSEMBLE=100
 
 START=20190101
 END__=20200101
