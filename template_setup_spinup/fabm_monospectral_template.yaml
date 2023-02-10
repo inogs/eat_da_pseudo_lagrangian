@@ -9,8 +9,8 @@ instances:
     parameters:
        pEPSCHL: 0.080                                       # attenuation by Chlorophyll (m^2/mg Chl), default= 0.0088
        pEPSCDOM: 0.01476                                    # attenuation by CDOM (m^2/mg C), default= 0.0646
-       EPS0r: 0.04                                          # background shortwave attenuation (1/m), default = 0.04
-       pEIR_eow: 0.4                                        # photosynthetically active fraction of shortwave radiation (-), default = 0.5
+       EPS0r: @@light.EPS0r@@                                          # background shortwave attenuation (1/m), default = 0.04
+       pEIR_eow: @@light.pEIR_eow@@                                        # photosynthetically active fraction of shortwave radiation (-), default = 0.5
     coupling:
        P1chl: P1/Chl
        P2chl: P2/Chl
@@ -151,8 +151,8 @@ instances:
 #             --------- Physiological parameters -----------------
       p_q10:   2.0                          # [-]            Characteristic Q10 coefficient
       p_temp:  0.0                          # [-]            Cut-off threshold for temperature factor
-      p_sum:   @@P1.p_sum@@                 # [1/d]          maximum specific productivity at reference temperature (1/d)
-      p_srs:   0.076                        # [1/d]          Respiration rate at 10 degrees C
+      p_sum:   2.5                          # [1/d]          maximum specific productivity at reference temperature (1/d)
+      p_srs:   @@P1.p_srs@@                 # [1/d]          Respiration rate at 10 degrees C
       p_sdmo:  0.0                          # [1/d]          Max.specific nutrient-stress lysis rate
       p_thdo:  0.0                          # [-]            Half saturation constant for nutrient stress lysis
       p_seo:   0.0                          # [1/d]          Extra lysis rate (biomass density-dependent)
@@ -181,8 +181,8 @@ instances:
       p_qncPPY: 0.0126                      # [mmolN/mgC]    Reference quotum N:C
       p_xqn: 2.0                            # [-]            Multiplication factor for luxury storage
 #                   ---- P limitation control ----
-      p_qup: 0.0025                         # [m3/mgC/d]     Membrane affinity for P
-      p_qplc: 0.00057                       # [mmolN/mgC]    minimum phosphorus to carbon ratio (mmol P/mg C)
+      p_qup: @@P1.p_qup@@                   # [m3/mgC/d]     Membrane affinity for P
+      p_qplc: @@P1.p_qplc@@                 # [mmolN/mgC]    minimum phosphorus to carbon ratio (mmol P/mg C)
       p_qpcPPY: 0.000786                    # [mmolP/mgC]    Reference quotum P:C
       p_xqp: 2.0                            # [-]            Multiplication factor for luxury storage
 #                   ---- Si limitation control ----
@@ -206,7 +206,7 @@ instances:
 #              --------- Chlorophyll parameters -----------
       p_switchChl: 2                        # [1-4]          Switch for Chla-a synthesis 
       p_sdchl: 0.2                          # [1/d]          Specific turnover rate for Chla 
-      p_alpha_chl: 2.61e-5                  # [mgC s m2/mgChl/uE]     Initial slope of the P-E curve
+      p_alpha_chl: @@P1.p_alpha_chl@@       # [mgC s m2/mgChl/uE]     Initial slope of the P-E curve
       p_quantum_yield: 0.750e-3             # [mgC / uE]     Photochemical efficiency
       p_Esource: 6                          # [1-6]          source of light for PP, 1=absorbed by P1, 5=scalar, 6=mono
                                               
@@ -606,11 +606,11 @@ instances:
 #             --------- Physiological parameters -----------------
       p_q10:     2.0     # [-]           Characteristic Q10 coefficient
       p_srs:     0.02    # [1/d]         Respiration rate at 10 degrees Celsius
-      p_sum:     2.71    # [1/d]         Potential growth rate
+      p_sum:     @@Z5.p_sum@@    # [1/d]         Potential growth rate
       p_sdo:     0.05    # [1/d]         Mortality rate due to oxygen limitation
       p_sd:      0.0     # [1/d]         Temperature independent mortality rate
-      p_pu:      0.5     # [-]           Assimilation efficiency
-      p_pu_ea:   0.5     # [-]           Fraction of activity excretion
+      p_pu:      @@Z5.p_pu@@     # [-]           Assimilation efficiency
+      p_pu_ea:   @@Z5.p_pu_ea@@  # [-]           Fraction of activity excretion
       p_chro:    8       # [mmolO2/m3]   Half-saturation oxygen concentration
       p_chuc:    30.0    # [mgC/m3]      Half-saturation Food concentration for Type II
       p_minfood: 50.0    # [mgC/m3]      Half-saturation food concentration for

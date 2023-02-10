@@ -28,9 +28,14 @@ for ((i=0;i<N_float; i++)); do
     WRKDIR=${SPINUP_FOLDER}/${float}_assimilation_F3
     echo $WRKDIR >> assimilation_F3_folder_list.txt
 
-# create spiunp folder for each float
+# create data assimilation folder for each float
     rm -rf $WRKDIR
     cp -r $ENSDIR  $WRKDIR
+
+#create fabm files with different parameters
+    cd $BASE_DIR/FABM_YAML_ASSIMILATION_GENARATION
+    bash crea_param_1D.sh ${N_ENSEMBLE}
+    mv fabm_????.yaml $WRKDIR
 
 #create perturbations on forcings
     cd $WRKDIR

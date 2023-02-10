@@ -29,6 +29,6 @@ IFS=$'\r\n' GLOBIGNORE='*' command eval  'ensemble_folder_list=($(cat ensemble_F
 
 cd ${ensemble_folder_list[${SLURM_ARRAY_TASK_ID}]}
 
-mpirun -n 100 eat_model_gotm --separate_gotm_yaml #--separate_restart_file
+mpiexec -n 100 eat_model_gotm --separate_gotm_yaml #--separate_restart_file
 
 date

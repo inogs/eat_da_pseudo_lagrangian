@@ -32,17 +32,12 @@ for ((i=0;i<N_float; i++)); do
 
 #create fabm files with different parameters
     cd $BASE_DIR/FABM_YAML_ENSEMBLE_GENARATION
-    source $HOME/sequence3.sh
     bash crea_param_1D.sh ${N_ENSEMBLE}
-    deactivate
-    module purge
     mv fabm_????.yaml $WRKDIR
 #create perturbations on forcings
     cd $WRKDIR
     cp gotm.yaml_ensemble_F2 gotm.yaml
-    conda activate eat
     eat-gotm-gen yaml gotm.yaml ${N_ENSEMBLE} -p surface/u10/scale_factor 0.20 -p surface/v10/scale_factor 0.20 -f fabm/yaml_file
-    conda deactivate
 
 
 done

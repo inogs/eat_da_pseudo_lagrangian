@@ -3,7 +3,7 @@
 #SBATCH --job-name=EAT_ASSIMILATION
 #SBATCH -N4 
 #SBATCH --ntasks-per-node=26
-#SBATCH --time=2:00:00
+#SBATCH --time=0:10:00
 #SBATCH --mem=300gb
 #SBATCH --account=icei_Rosati
 #SBATCH --partition=g100_usr_prod

@@ -1,4 +1,5 @@
 #! /bin/bash
+source $HOME/sequence3.sh
 BASE_DIR=$PWD
 
 SPINUP_FOLDER=$CINECA_SCRATCH/WP6_TEST
@@ -59,3 +60,5 @@ for ((i=0;i<N_float; i++)); do
     cd $WRKDIR
     cp gotm.yaml_spinup_F1 gotm.yaml
 done
+deactivate
+module purge
