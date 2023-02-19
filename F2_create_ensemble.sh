@@ -1,8 +1,9 @@
 #! /bin/bash
 BASE_DIR=$PWD
 
-SPINUP_FOLDER=$CINECA_SCRATCH/WP6_TEST
-mkdir -p ${SPINUP_FOLDER}
+. setup.sh
+#EXPERIMENT_FOLDER=$CINECA_SCRATCH/WP6_TEST
+mkdir -p ${EXPERIMENT_FOLDER}
 
 declare -a float_list 
 float_list=('6902903' '6901772')
@@ -22,8 +23,8 @@ for ((i=0;i<N_float; i++)); do
     echo ${float_list[${i}]}
     float=${float_list[${i}]}
 
-    SPNDIR=${SPINUP_FOLDER}/${float}_spinup_F1
-    WRKDIR=${SPINUP_FOLDER}/${float}_ensemble_F2
+    SPNDIR=${EXPERIMENT_FOLDER}/${float}_spinup_F1
+    WRKDIR=${EXPERIMENT_FOLDER}/${float}_ensemble_F2
     echo $WRKDIR >> ensemble_F2_folder_list.txt
 
 # create spiunp folder for each float

@@ -72,10 +72,10 @@ Allprofiles = bio_float.FloatSelector(var, TI, Rectangle(-6,36,30,46))
 
 
 errvar = {
-    # 'TEMP': [0.5,0.5,.5] ,
-    # 'PSAL': [0.1,0.1,0.1],
-    # 'NITRATE': [np.nan,np.nan,np.nan],
-    'CHLA': [(1.2,0.02),(1.2,0.02),(1.2,0.02)],
+      'TEMP': [0.5,0.5,.5] ,
+      'PSAL': [0.1,0.1,0.1],
+      'NITRATE': [np.nan,np.nan,np.nan],
+      'CHLA': [(1.2,0.02),(1.2,0.02),(1.2,0.02)],
 }
 err_bound = [0,20,400]
 errobs = errvar[var]

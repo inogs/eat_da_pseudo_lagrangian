@@ -25,8 +25,8 @@ for ((i=0;i<N_VAR; i++)); do
         mkdir -p $OUTDIR
 
 
-#       python extract_float_profiles_addmul.py -v $VAR -o $OUTDIR -f $FLOAT -s $START -e $END__ -d 200
-        python extract_float_profiles.py -v $VAR -o $OUTDIR -f $FLOAT -s $START -e $END__ -d 200
+        python extract_float_profiles_addmul.py -v $VAR -o $OUTDIR -f $FLOAT -s $START -e $END__ -d 200
+#       python extract_float_profiles.py -v $VAR -o $OUTDIR -f $FLOAT -s $START -e $END__ -d 200
 
 
         PLOTDIR=$PWD/HOVMOELLER/${VAR}_${FLOAT}/

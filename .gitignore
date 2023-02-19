@@ -2,3 +2,9 @@
 *.out
 *.stderr
 *.stdout
+SETTING_ARGO/EXTRACT_from_RA/lat.txt
+SETTING_ARGO/EXTRACT_from_RA/lon.txt
+SETTING_ARGO/EXTRACT_gotm_nudg/launcher_orig.sh
+assimilation_F3_folder_list.txt
+ensemble_F2_folder_list.txt
+spinup_folder_list.txt

@@ -130,6 +130,7 @@ err0 = 5 #mult %
 err1 = .03 #add concentraione
 
 dateobsLIST = []
+dateobjLIST = []
 obsLIST = []
 errLIST = []
 for ii,filein in enumerate(TL.filelist):
@@ -148,8 +149,9 @@ for ii,filein in enumerate(TL.filelist):
     print(datefile)
     obsLIST.append(CHL[jP,iP])
     dateobsLIST.append(datefile.strftime('%Y-%m-%d %H:%M:%S'))
-    errstr = "0.05"
-#   errstr = "1%06d"  %(int(err0*1000)) + "%06d" %(err1*1000)
+    dateobjLIST.append(TL.Timelist[ii])
+#   errstr = "0.05"
+    errstr = "1%06d"  %(int(err0*1000)) + "%06d" %(err1*1000)
     errLIST.append(errstr)
 
 
@@ -176,4 +178,5 @@ f.writelines(LINES)
 
 f.close()
 
-
+fileout = OUTDIR + '/nrt_chlsat.obs'
+np.savez(fileout, allow_pickle=True, dateobjLIST=dateobjLIST, obsLIST=obsLIST, errLIST=errLIST)

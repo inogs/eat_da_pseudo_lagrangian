@@ -22,12 +22,12 @@ module purge
 
 conda activate eat
 
-./F2_create_ensemble.sh
+bash ./F2_create_ensemble.sh
 
 sbatch -o slurm-%A_%a.out -e slurm-%A_%a.err --array=0-1 job_step_F2_ensemble.slurm
 
-./F3_create_assimilation.sh
+bash ./F3_create_assimilation.sh
 
-sbatch -o slurm-%A_%a.out -e slurm-%A_%a.err --array=0-1 job_step_F3_assimilation.slurm
+sbatch -o STD_OUTERR/slurm-%A_%a.out -e STD_OUTERR/slurm-%A_%a.err --array=0-19 job_step_F3_assimilation.slurm
 
 conda deactivate
