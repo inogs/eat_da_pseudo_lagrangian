@@ -24,9 +24,12 @@ for ((i=0;i<N_VAR; i++)); do
 #       OUTDIR=$PWD/PROFILES_ERRadd_mul/P1.2_A0.02/${VAR}_${FLOAT}/
         mkdir -p $OUTDIR
 
-
-        python extract_float_profiles_addmul.py -v $VAR -o $OUTDIR -f $FLOAT -s $START -e $END__ -d 200
-#       python extract_float_profiles.py -v $VAR -o $OUTDIR -f $FLOAT -s $START -e $END__ -d 200
+        if [ $VAR == 'CHLA' ]
+	then
+            python extract_float_profiles_addmul.py -v $VAR -o $OUTDIR -f $FLOAT -s $START -e $END__ -d 200
+        else
+            python extract_float_profiles.py -v $VAR -o $OUTDIR -f $FLOAT -s $START -e $END__ -d 200
+        fi
 
 
         PLOTDIR=$PWD/HOVMOELLER/${VAR}_${FLOAT}/

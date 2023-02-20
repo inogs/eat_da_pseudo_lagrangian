@@ -90,6 +90,11 @@ depths.extend(depths_mid)
 depths.extend(depths_bott)
 
 LINES = []
+date__vector=[]
+depth_vector=[]
+obs___vector=[]
+err0__vector=[]
+err1__vector=[]
 for pp in Allprofiles:
     if floatid in pp.ID():
         print(pp.ID())
@@ -97,19 +102,26 @@ for pp in Allprofiles:
         datestring = pp.time.strftime('%Y-%m-%d %H:%M:%S')
         ProfInterp = np.interp(depths,Pres,Profile)
         errprof = np.zeros(len(ProfInterp),dtype=object) 
-        for iib,bb in enumerate(err_bound):
-            #errprof[np.array(depths)>bb] = errobs[iib][0]*1000 + errobs[iib][1]*1.e+9 + 1.e+12
-            if ((errobs[iib][0]>=1000) | (errobs[iib][1]>=1000)):
-                print('err >= 1000 not implemented - exit')
-                import sys
-                sys.exit('exiting')
-            errprof[np.array(depths)>bb] = "1%06d"  %(int(errobs[iib][0]*1000)) + "%06d" %(int(errobs[iib][1]*1000))
+        if var == 'CHLA':
+            for iib,bb in enumerate(err_bound):
+                #errprof[np.array(depths)>bb] = errobs[iib][0]*1000 + errobs[iib][1]*1.e+9 + 1.e+12
+                if ((errobs[iib][0]>=1000) | (errobs[iib][1]>=1000)):
+                    print('err >= 1000 not implemented - exit')
+                    import sys
+                    sys.exit('exiting')
+                errprof[np.array(depths)>bb] = "1%06d"  %(int(errobs[iib][0]*1000)) + "%06d" %(int(errobs[iib][1]*1000))
         ProfInterp = ProfInterp[np.array(depths)<depthLIM]
         for ii in range(len(ProfInterp)):
         #for ii in range(len(Pres)):
             line = "%s\t%5.3f\t%5.3f\t%s\n" %(datestring,-depths[ii],ProfInterp[ii],errprof[ii])
             #line = "%s\t%5.3f\t%5.3f\t%5.3f\n" %(datestring,-Pres[ii],Profile[ii],errobs)
             LINES.append(line)
+            date__vector.append(pp.time)
+            depth_vector.append(-depths[ii])
+            obs___vector.append(ProfInterp[ii])
+            if var == 'CHLA':
+                err0__vector.append(errobs[0][0])
+                err1__vector.append(errobs[0][1])
 
 
 fileout = OUTDIR + '/profile_' + var + '.obs'
@@ -118,3 +130,5 @@ f = open(fileout,'w')
 f.writelines(LINES)
 
 f.close()
+
+np.savez(fileout, allow_pickle=True, dateobjLIST=date__vector, depthLIST=depth_vector, obsLIST=obs___vector, err0LIST=err0__vector, err1LIST=err1__vector)

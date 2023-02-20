@@ -8,6 +8,21 @@ from datetime import timedelta
 import glob
 from scipy.stats import variation
 
+def get_data_at_depth(indata,depth,delta):
+    depths=indata['depthLIST']
+    out_date=[]
+    out_data=[]
+    out0_err =[]
+    out1_err =[]
+    for i,d in enumerate(depths):
+        if (d> (depth-delta)) and (d< (depth+delta)):
+            out_date.append(indata['dateobjLIST'][i])
+            out_data.append(indata['obsLIST'][i])
+            out0_err.append(indata['err0LIST'][i])
+            out1_err.append(indata['err1LIST'][i])
+    return  out_date,out_data, out0_err, out1_err
+
+
 #/g100_scratch/userexternal/plazzari/WP6_TEST/6901772_instances_P1_parameters_p_alpha_chl_assimilation_F3
 a=np.loadtxt("../assimilation_F3_folder_list.txt",dtype=np.dtype('U'))
 
@@ -20,6 +35,9 @@ for test_dir in a:
     
     obs_sat_file=test_dir + "/ToAssimilate/nrt_chlsat.obs.npz"
     data_sat = np.load(obs_sat_file,allow_pickle=True)
+    
+    obs_argo_file=test_dir + "/ToAssimilate/profile_CHLA.obs.npz"
+    data_argo = np.load(obs_argo_file,allow_pickle=True)
     
     ref = datetime.datetime(2019, 1, 1, 0, 0, 0)
     for inc,ncname in enumerate(filenames):
@@ -72,6 +90,8 @@ for test_dir in a:
     #dateobjLIST=dateobjLIST, obsLIST=obsLIST,errLIST=errLIST
             ln_sat=ax.plot(data_sat['dateobjLIST'],data_sat['obsLIST'],label='CHL_sat',c='red')
         lns1 = ax.plot(date_list,CHL_mean[:,id_dep[iax]],label='CHL',c='black')
+        argo_date, argo_obs, argo_err0, argo_err1 = get_data_at_depth(data_argo,sdepth[iax],5)
+        ln_argo = ax.plot(argo_date,argo_obs,label='CHL_argo',c='green')
 #       ax.set_xticks(tpos)
 #       ax.set_xticklabels(tick_labels,rotation=90)
         ax.set_xlabel('Time')
@@ -79,7 +99,7 @@ for test_dir in a:
         title = 'depth ' + str(sdepth[iax]) + ' m'
         ax.set_title(title,fontsize=9)
     
-    lns = lns1+ln_sat
+    lns = lns1+ln_sat+ln_argo
     labels = [l.get_label() for l in lns]
     fig.legend(lns,labels,ncol=2, loc='upper center')
     fig.text(0.04, 0.5, 'CHL-a Concentration [$mg/m^3$]', va='center', rotation='vertical')
@@ -87,4 +107,4 @@ for test_dir in a:
     prmtr_nm  = test_dir.split('/')[5][8:][:-16]
     fileout='chl_' + floatname  + '_' + prmtr_nm  + 'plot.png'
     fig.savefig(fileout, format='png',dpi=150, bbox_inches="tight")
-    
+    plt.close(fig)

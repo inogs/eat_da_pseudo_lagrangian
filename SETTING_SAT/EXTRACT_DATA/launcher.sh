@@ -16,7 +16,7 @@ ERRM=1.25
 TYPE=DAILY
 TYPE=WEEKLY
 INSAT=INSAT_$TYPE/
-OUTDIR=$2/ToAssimilate
+OUTDIR=$2
 mkdir -p $OUTDIR
 
 #echo python extract_obs_chlsat_err.py -i $INSAT -o $OUTDIR -ln $LON -lt $LAT -m $MASKFILE -v $DIRVARSAT -em $ERRM

@@ -33,12 +33,11 @@ for ((i=0;i<N_float; i++)); do
 
 #extract profile from float as observation files
     cd $BASE_DIR/SETTING_ARGO/EXTRACT_PROFILES/
-    bash launcher.sh ${float} ${START} ${END__} $WRKDIR
+    bash launcher.sh ${float} ${START} ${END__} $WRKDIR/ToAssimilate
 
 #extract sat data along float track as observation files
     cd $BASE_DIR/SETTING_SAT/EXTRACT_DATA/
-    bash launcher.sh ${float} $WRKDIR
-#   bash launcher.sh ${float} ${START} ${END__} $WRKDIR
+    bash launcher.sh ${float} $WRKDIR/ToAssimilate
 
 #extract profile from float as nudging files
     cd $BASE_DIR/SETTING_ARGO/EXTRACT_gotm_nudg/

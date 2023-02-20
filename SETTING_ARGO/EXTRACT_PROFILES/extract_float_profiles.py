@@ -90,6 +90,11 @@ depths.extend(depths_mid)
 depths.extend(depths_bott)
 
 LINES = []
+date__vector=[]
+depth_vector=[]
+obs___vector=[]
+err0__vector=[]
+err1__vector=[]
 for pp in Allprofiles:
     if floatid in pp.ID():
         print(pp.ID())
@@ -105,6 +110,11 @@ for pp in Allprofiles:
             line = "%s\t%5.3f\t%5.3f\t%5.3f\n" %(datestring,-depths[ii],ProfInterp[ii],errprof[ii])
             #line = "%s\t%5.3f\t%5.3f\t%5.3f\n" %(datestring,-Pres[ii],Profile[ii],errobs)
             LINES.append(line)
+            date__vector.append(datestring)
+            depth_vector.append(-depths[ii])
+            obs___vector.append(ProfInterp[ii])
+            err0__vector.append(errprof[ii])
+            err1__vector.append(errprof[ii])
         # break
 
 
@@ -114,3 +124,4 @@ f = open(fileout,'w')
 f.writelines(LINES)
 
 f.close()
+np.savez(fileout, allow_pickle=True, dateobjLIST=date__vector, depthLIST=depth_vector, obsLIST=obs___vector, err0LIST=err0__vector, err1LIST=err1__vector)
