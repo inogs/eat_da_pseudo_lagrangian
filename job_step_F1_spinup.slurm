@@ -29,6 +29,7 @@ IFS=$'\r\n' GLOBIGNORE='*' command eval  'spinup_folder_list=($(cat spinup_folde
 
 cd ${spinup_folder_list[${SLURM_ARRAY_TASK_ID}]}
 
-mpiexec -np 1 eat_model_gotm
+mpiexec -np 1 eat-gotm
+#mpiexec -np 1 eat_model_gotm
 
 date
