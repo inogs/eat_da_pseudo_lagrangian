@@ -67,6 +67,7 @@ for test_dir in get_iterable(a):
     time=NCin.variables['time'][:].filled()
     
     CHL_mean = np.mean(CHL_arr, axis=0)
+    CHL_std  = np.std(CHL_arr, axis=0)
     CHL_cv   = variation(CHL_arr, axis=0)
     
     date_list = []
@@ -102,24 +103,30 @@ for test_dir in get_iterable(a):
     for iax,ax in enumerate(axs):
         if iax == 0:
     #dateobjLIST=dateobjLIST, obsLIST=obsLIST,errLIST=errLIST
-            ln_sat=ax.plot(data_sat['dateobjLIST'],data_sat['obsLIST'],label='CHL_sat',c='red')
-        lns1 = ax.plot(date_list,CHL_mean[:,id_dep[iax]],label='CHL',c='black')
-        lns1 = ax.plot(date_list,CHL_arr[:,:,id_dep[iax]].T,alpha=0.1)
+         ln_sat=ax.plot(data_sat['dateobjLIST'],data_sat['obsLIST'],label='CHL_sat',c='red')
+        lns1 = ax.plot(date_list,CHL_mean[:,id_dep[iax]],label='CHL_model',c='black')
+        ax.plot(date_list,CHL_arr[:,:,id_dep[iax]].T,alpha=0.1)
+        axT=ax.twinx()
+        lns_std=axT.plot(date_list,CHL_std[:,id_dep[iax]],c='magenta',alpha=0.5, label='CHL_mod_std')
         argo_date, argo_obs, argo_err0, argo_err1 = get_data_at_depth(data_argo,sdepth[iax],5)
         ln_argo = ax.plot(argo_date,argo_obs,label='CHL_argo',c='green')
 #       ax.set_xticks(tpos)
 #       ax.set_xticklabels(tick_labels,rotation=90)
         ax.set_xticklabels(ax.get_xticks(), rotation = angle)
         ax.set_xlabel('Time')
-        ax.set_ylim([0, 1.0])
+        ax.set_ylim([0.01, 1.0])
+        ax.set_xlim([datetime.date(2019, 1, 1), datetime.date(2020, 1, 1)])
+        ax.set_yscale('log')
+        axT.set_yscale('log')
+        axT.set_ylabel(r'$\sigma_{CHL-a}$ [$mg$ $m^{-3}$]')
         title = 'depth ' + str(sdepth[iax]) + ' m'
         ax.set_title(title,fontsize=9)
         ax.xaxis.set_major_formatter(date_form) #set the date format
     
-    lns = lns1+ln_sat+ln_argo
+    lns = lns1+lns_std+ln_sat+ln_argo
     labels = [l.get_label() for l in lns]
-    fig.legend(lns,labels,ncol=2, loc='upper center')
-    fig.text(0.04, 0.5, 'CHL-a Concentration [$mg/m^3$]', va='center', rotation='vertical')
+    fig.legend(lns,labels,ncol=4, loc='upper center')
+    fig.text(0.04, 0.5, 'CHL-a Concentration [$mg$ $m^{-3}$]', va='center', rotation='vertical')
     floatname = test_dir.split('/')[5][:7]
     prmtr_nm  = test_dir.split('/')[5][8:][:-16]
     fileout='chl_' + floatname  + '_' + prmtr_nm  + 'F2_plot.png'
