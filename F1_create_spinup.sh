@@ -31,13 +31,13 @@ for ((i=0;i<N_float; i++)); do
     rm -rf $WRKDIR
     cp -r template_setup_spinup $WRKDIR
 
-#extract profile from float as observation files
-    cd $BASE_DIR/SETTING_ARGO/EXTRACT_PROFILES/
-    bash launcher.sh ${float} ${START} ${END__} $WRKDIR/ToAssimilate
+#extract profile from float as observation files --> moved to F3
+#   cd $BASE_DIR/SETTING_ARGO/EXTRACT_PROFILES/
+#   bash launcher.sh ${float} ${START} ${END__} $WRKDIR/ToAssimilate
 
-#extract sat data along float track as observation files
-    cd $BASE_DIR/SETTING_SAT/EXTRACT_DATA/
-    bash launcher.sh ${float} $WRKDIR/ToAssimilate
+#extract sat data along float track as observation files --> moved to F3
+#   cd $BASE_DIR/SETTING_SAT/EXTRACT_DATA/
+#   bash launcher.sh ${float} $WRKDIR/ToAssimilate
 
 #extract profile from float as nudging files
     cd $BASE_DIR/SETTING_ARGO/EXTRACT_gotm_nudg/

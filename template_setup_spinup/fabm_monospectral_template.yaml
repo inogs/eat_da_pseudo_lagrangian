@@ -151,7 +151,7 @@ instances:
 #             --------- Physiological parameters -----------------
       p_q10:   2.0                          # [-]            Characteristic Q10 coefficient
       p_temp:  0.0                          # [-]            Cut-off threshold for temperature factor
-      p_sum:   2.5                          # [1/d]          maximum specific productivity at reference temperature (1/d)
+      p_sum:   @@instances_P1_parameters_p_sum@@ # [1/d]          maximum specific productivity at reference temperature (1/d)
       p_srs:   @@instances_P1_parameters_p_srs@@ # [1/d]          Respiration rate at 10 degrees C
       p_sdmo:  0.0                          # [1/d]          Max.specific nutrient-stress lysis rate
       p_thdo:  0.0                          # [-]            Half saturation constant for nutrient stress lysis

@@ -150,8 +150,10 @@ for ii,filein in enumerate(TL.filelist):
     obsLIST.append(CHL[jP,iP])
     dateobsLIST.append(datefile.strftime('%Y-%m-%d %H:%M:%S'))
     dateobjLIST.append(TL.Timelist[ii])
-#   errstr = "0.05"
-    errstr = "1%06d"  %(int(err0*1000)) + "%06d" %(err1*1000)
+    errstr = CHL[jP,iP]*0.1
+#   errstr = np.log10(1.0+0.3)
+#   errstr = "0.01"
+#   errstr = "1%06d"  %(int(err0*1000)) + "%06d" %(err1*1000)
     errLIST.append(errstr)
 
 

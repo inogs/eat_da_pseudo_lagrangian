@@ -15,10 +15,10 @@ N_ENSEMBLE=100
 
 declare -a param_list
 
-param_list=('instances_light_parameters_EPS0r'
+param_list=( 'instances_light_parameters_EPS0r'
              'instances_Z5_parameters_p_pu'
              'instances_light_parameters_pEIR_eow'
-	     'instances_P1_parameters_p_sum'
+             'instances_P1_parameters_p_sum'
              'instances_Z5_parameters_p_sum'
              'instances_P1_parameters_p_qlcPPY'
              'instances_P1_parameters_p_qup'
@@ -36,13 +36,10 @@ END__=20200101
 START_NUDG=20180101
 END___NUDG=20210101
 
-#rm -f assimilation_F3_folder_list.txt
+rm -f assimilation_F3_folder_list.txt
 
-i=$1 # float index
-p=$2 # parameter index
-
-#for ((i=0;i<N_float; i++)); do
-#    for ((p=0;p<N_param; p++)); do
+for ((i=0;i<N_float; i++)); do
+    for ((p=0;p<N_param; p++)); do
        cd $BASE_DIR
        echo ${float_list[${i}]}
        float=${float_list[${i}]}
@@ -67,16 +64,16 @@ p=$2 # parameter index
    
 #create fabm files with different parameters
        cd $BASE_DIR/FABM_YAML_ASSIMILATION_GENARATION
-       bash crea_param_1D.sh ${N_ENSEMBLE} ${param} ${WRKDIR}
+       bash crea_param_1D.sh ${N_ENSEMBLE} ${param}
        mv fabm_????.yaml $WRKDIR
    
 #create perturbations on forcings
        cd $WRKDIR
        cp gotm.yaml_ensemble_F2 gotm.yaml
-       eat-gotm-gen yaml gotm.yaml ${N_ENSEMBLE} -p surface/u10/scale_factor 0.20 -p surface/v10/scale_factor 0.20 -f fabm/yaml_file
+       eat-gotm-gen yaml gotm.yaml ${N_ENSEMBLE} -p surface/u10/scale_factor 0.40 -p surface/v10/scale_factor 0.40 -f fabm/yaml_file
        cp ${BASE_DIR}/runESTKF_template.py .
    
-#   done
-#done
+   done
+done
 
 #conda deactivate

@@ -24,6 +24,7 @@ def argument():
 
 args = argument()
 
+import sys
 import numpy as np
 #from setting_parameters import parametersDICT
 from commons.utils import addsep
@@ -59,6 +60,7 @@ range1 = 0.2
 list_params=['instances_light_parameters_EPS0r',      #  100.   Background shortwave attenuation                            [1/m]                [21]
              'instances_Z5_parameters_p_pu',          #   67.   Assimilation efficiency, microzooplankton                   [-]                  [13]
              'instances_light_parameters_pEIR_eow',   #   54.   Photosynthetically active fraction of shortwave radiation   [-]                  [6]
+             'instances_P1_parameters_p_sum',         #         maximum specific productivity at reference temperature (1/d)
              'instances_Z5_parameters_p_sum',         #   47.   Potential growth rate, microzooplankton                     [1/d]                [13]
              'instances_P1_parameters_p_qlcPPY',      #   42.   Reference Chla:C quotum, diatoms                            [mgChla/mgC]         [1]
              'instances_P1_parameters_p_qup',         #   41.   Membrane affinity for P, diatoms                            [m3/mgC/d]           [4]
@@ -71,6 +73,7 @@ list_params=['instances_light_parameters_EPS0r',      #  100.   Background short
 list_nominal=[0.04,      #  100.   Background shortwave attenuation                            [1/m]                [21]
               0.5,       #   67.   Assimilation efficiency, microzooplankton                   [-]                  [13]
               0.4,       #   54.   Photosynthetically active fraction of shortwave radiation   [-]                  [6]
+              2.5,       #   maximum specific productivity at reference temperature (1/d)
               2.71,      #   47.   Potential growth rate, microzooplankton                     [1/d]                [13]
               0.026,     #   42.   Reference Chla:C quotum, diatoms                            [mgChla/mgC]         [1]
               0.0025,    #   41.   Membrane affinity for P, diatoms                            [m3/mgC/d]           [4]
@@ -80,12 +83,12 @@ list_nominal=[0.04,      #  100.   Background shortwave attenuation             
               0.076]     #   33.   Respiration rate at 10 degrees C, diatoms                   [1/d]                [2]
  
 
-list_range=[       range1,    range1,           range1,     range1,        range1,     range1,       range1,           range1,      range1,    range1  ]
+list_range=[ range1, range1, range1, range1, range1, range1, range1, range1, range1, range1, range1]
 
 N_params= len(list_params)
 
 list_range=[]
-
+ipert = -1
 for i,param in enumerate(list_params):
     if param  == perturb_param:
         list_range.append([list_nominal[i],range1])
@@ -93,6 +96,11 @@ for i,param in enumerate(list_params):
         ipert = i
     else:
         list_range.append([list_nominal[i],range0])
+
+
+if ipert == -1:
+    print('error on perturbed: ' + perturb_param)
+    sys.exit()
 
 keys=list_params
 values=list_range

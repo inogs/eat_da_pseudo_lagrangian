@@ -9,6 +9,18 @@ import glob
 from scipy.stats import variation
 import matplotlib.dates as mdates
 from matplotlib.dates import DateFormatter
+import mpi4py
+
+try:
+    from mpi4py import MPI
+    comm  = MPI.COMM_WORLD
+    rank  = comm.Get_rank()
+    nranks =comm.size
+    isParallel = True
+except:
+    rank   = args.rank
+    nranks = args.nranks
+    isParallel = False
 
 #date format for the plots
 date_form = DateFormatter("%y-%m")
@@ -34,7 +46,7 @@ def get_data_at_depth(indata,depth,delta):
 #/g100_scratch/userexternal/plazzari/WP6_TEST/6901772_instances_P1_parameters_p_alpha_chl_assimilation_F3
 a=np.loadtxt("../assimilation_F3_folder_list.txt",dtype=np.dtype('U'))
 
-for test_dir in a:
+for test_dir in a[rank::nranks]:
     floatname = test_dir.split('/')[5][:7]
     prmtr_nm  = test_dir.split('/')[5][8:][:-16]
 #filenames = glob.glob('/g100_scratch/userexternal/gocchipi/stoc_prova/*/result.nc')
@@ -50,30 +62,35 @@ for test_dir in a:
     ref = datetime.datetime(2019, 1, 1, 0, 0, 0)
     for inc,ncname in enumerate(filenames):
         infile=ncname 
-        
+        print(infile)
         NCin=NC4.Dataset(infile,"r")
-        
-        depth=NCin.variables['z'][:,:,0,0].filled()
         if inc == 0:
-    #       CHL_arr = np.zeros((len(filenames),tleng,len(depth)))
-            CHL_arr = np.zeros((len(filenames),len(NCin.variables['time'][:]),len(depth[0])))
-        CHL_arr[inc,:,:]=NCin.variables['P1_Chl'][:,:,0,0].filled()+NCin.variables['P2_Chl'][:,:,0,0].filled()+NCin.variables['P3_Chl'][:,:,0,0].filled()+NCin.variables['P4_Chl'][:,:,0,0].filled()
-    time=NCin.variables['time'][:].filled()
+            nTframes=len(NCin.variables['time'][:])
+            time=NCin.variables['time'][:].filled()
+        nTframes=min(nTframes,len(NCin.variables['time'][:]))
+        depth=NCin.variables['z'][:,:,0,0].filled()
+        NCin.close()
+    print(nTframes)
+    CHL_arr = np.zeros((len(filenames),nTframes,len(depth[0])))
+
+    for inc,ncname in enumerate(filenames):
+        infile=ncname 
+        NCin=NC4.Dataset(infile,"r")
+        CHL_arr[inc,0:nTframes,:]=NCin.variables['P1_Chl'][0:nTframes,:,0,0].filled()+NCin.variables['P2_Chl'][0:nTframes,:,0,0].filled()+NCin.variables['P3_Chl'][0:nTframes,:,0,0].filled()+NCin.variables['P4_Chl'][0:nTframes,:,0,0].filled()
+        NCin.close()
     
     CHL_mean = np.mean(CHL_arr, axis=0)
+    CHL_std  = np.std(CHL_arr, axis=0)
     CHL_cv   = variation(CHL_arr, axis=0)
     
     date_list = []
     
-    for myt in time:
+    for myt in time[0:nTframes]:
         step = datetime.timedelta(seconds=int(myt))
         date_list.append(ref + step)
     
     nT=len(date_list)
     nZ=depth.shape[1]
-    
-    #(time, z, lat, lon)
-    #CHL=NCin.variables['P1_Chl'][:,:,0,0].filled()+NCin.variables['P2_Chl'][:,:,0,0].filled()+NCin.variables['P3_Chl'][:,:,0,0].filled()+NCin.variables['P4_Chl'][:,:,0,0].filled()
     
     fig,axs = plt.subplots(1,figsize=(9, 6),gridspec_kw = {'wspace':1.5, 'hspace':1.5})
     x = np.arange(nT)
@@ -97,22 +114,30 @@ for test_dir in a:
         if iax == 0:
     #dateobjLIST=dateobjLIST, obsLIST=obsLIST,errLIST=errLIST
             ln_sat=ax.plot(data_sat['dateobjLIST'],data_sat['obsLIST'],label='CHL_sat',c='red')
-        lns1 = ax.plot(date_list,CHL_mean[:,id_dep[iax]],label='CHL',c='black')
+        lns1 = ax.plot(date_list,CHL_mean[:,id_dep[iax]],label='CHL_model',c='black')
+        ax.plot(date_list,CHL_arr[:,:,id_dep[iax]].T,alpha=0.1)
+        axT=ax.twinx()
+        lns_std=axT.plot(date_list,CHL_std[:,id_dep[iax]],c='magenta',alpha=0.5, label='CHL_mod_std')
         argo_date, argo_obs, argo_err0, argo_err1 = get_data_at_depth(data_argo,sdepth[iax],5)
         ln_argo = ax.plot(argo_date,argo_obs,label='CHL_argo',c='green')
 #       ax.set_xticks(tpos)
 #       ax.set_xticklabels(tick_labels,rotation=90)
         ax.set_xticklabels(ax.get_xticks(), rotation = angle)
         ax.set_xlabel('Time')
-        ax.set_ylim([0, 1.0])
+        axT.set_ylabel(r'chl [$mgchlm^{-3}$]')
+        ax.set_ylim([0.01, 1.0])
+        ax.set_xlim([datetime.date(2019, 1, 1), datetime.date(2020, 1, 1)])
+        ax.set_yscale('log')
+        axT.set_yscale('log')
+        axT.set_ylabel(r'$\sigma_{CHL-a}$ [$mg$ $m^{-3}$]')
         title = 'depth ' + str(sdepth[iax]) + ' m'
         ax.set_title(title,fontsize=9)
         ax.xaxis.set_major_formatter(date_form) #set the date format
     
-    lns = lns1+ln_sat+ln_argo
+    lns = lns1+lns_std+ln_sat+ln_argo
     labels = [l.get_label() for l in lns]
-    fig.legend(lns,labels,ncol=2, loc='upper center')
-    fig.text(0.04, 0.5, 'CHL-a Concentration [$mg/m^3$]', va='center', rotation='vertical')
+    fig.legend(lns,labels,ncol=4, loc='upper center')
+    fig.text(0.04, 0.5, 'CHL-a Concentration [$mg$ $m^{-3}$]', va='center', rotation='vertical')
     floatname = test_dir.split('/')[5][:7]
     prmtr_nm  = test_dir.split('/')[5][8:][:-16]
     fileout='chl_' + floatname  + '_' + prmtr_nm  + 'plot.png'

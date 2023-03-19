@@ -32,10 +32,10 @@ for ((i=0;i<N_VAR; i++)); do
         fi
 
 
-        PLOTDIR=$PWD/HOVMOELLER/${VAR}_${FLOAT}/
-        mkdir -p $PLOTDIR
+#       PLOTDIR=$PWD/HOVMOELLER/${VAR}_${FLOAT}/
+#       mkdir -p $PLOTDIR
 
-        python plot_hovmoeller.py -v $VAR -o $PLOTDIR -f $FLOAT -s $START -e $END__
+#       python plot_hovmoeller.py -v $VAR -o $PLOTDIR -f $FLOAT -s $START -e $END__
 
 done
 

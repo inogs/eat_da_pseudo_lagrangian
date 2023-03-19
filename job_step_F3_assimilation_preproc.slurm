@@ -1,6 +1,6 @@
 #! /bin/bash
 
-#SBATCH --job-name=EAT_ASSIMILATION
+#SBATCH --job-name=PRE_EAT_ASSIMILATION
 #SBATCH -N1 
 #SBATCH --ntasks-per-node=1
 #SBATCH --time=0:05:00
@@ -32,6 +32,7 @@ IFS=$'\r\n' GLOBIGNORE='*' command eval  'ensemble_folder_list=($(cat ensemble_F
 param_list=('instances_light_parameters_EPS0r' 
              'instances_Z5_parameters_p_pu' 
              'instances_light_parameters_pEIR_eow' 
+             'instances_P1_parameters_p_sum' 
              'instances_Z5_parameters_p_sum' 
              'instances_P1_parameters_p_qlcPPY' 
              'instances_P1_parameters_p_qup' 
@@ -40,8 +41,8 @@ param_list=('instances_light_parameters_EPS0r'
              'instances_P1_parameters_p_qplc' 
              'instances_P1_parameters_p_srs')
 
-i_float=$((SLURM_ARRAY_TASK_ID/10))
-i_param=$((SLURM_ARRAY_TASK_ID%10)) # 10 = number of params
+i_float=$((SLURM_ARRAY_TASK_ID/11))
+i_param=$((SLURM_ARRAY_TASK_ID%11)) # 10 = number of params
 
 bash ./F3_create_assimilation.sh ${i_float} ${i_param}
 
