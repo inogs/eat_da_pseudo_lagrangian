@@ -38,7 +38,7 @@ def argument():
                             )
 
     parser.add_argument(   '--depth', '-d',
-                            type = str,
+                            type = float,
                             required = False,
                             help = 'max depth of observations'
                             )
@@ -62,9 +62,9 @@ floatid = args.floatid
 OUTDIR = addsep(args.outdir)
 
 if args.depth is not None:
-    depthLIM =  np.float(args.depth)
+    depthLIM =  args.depth
 else:
-    depthLIM = 5000
+    depthLIM = 5000.
 
 TI = TimeInterval(startTime, endTime)
 
@@ -113,7 +113,8 @@ for pp in Allprofiles:
         ProfInterp = ProfInterp[np.array(depths)<depthLIM]
         for ii in range(len(ProfInterp)):
         #for ii in range(len(Pres)):
-            line = "%s\t%5.3f\t%5.3f\t%s\n" %(datestring,-depths[ii],ProfInterp[ii],errprof[ii])
+            line = "%s\t%5.3f\t%5.3f\t%6.4f\n" %(datestring,-depths[ii],max(ProfInterp[ii],0.01),max(0.3*ProfInterp[ii],0.01))
+            #line = "%s\t%5.3f\t%5.3f\t%s\n" %(datestring,-depths[ii],ProfInterp[ii],errprof[ii])
             #line = "%s\t%5.3f\t%5.3f\t%5.3f\n" %(datestring,-Pres[ii],Profile[ii],errobs)
             LINES.append(line)
             date__vector.append(pp.time)

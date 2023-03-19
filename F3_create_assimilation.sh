@@ -1,7 +1,7 @@
 #! /bin/bash
 #conda activate eat
 #export PYTHONPATH=$PYTHONPATH:/g100_work/OGS21_PRACE_P/COPERNICUS/bit.sea
-export PYTHONPATH=$PYTHONPATH:/g100_work/OGS_devC/V10C/RUNS_SETUP/SEAMLESS/bit.sea
+#export PYTHONPATH=$PYTHONPATH:/g100_work/OGS_devC/V10C/RUNS_SETUP/SEAMLESS/bit.sea
 BASE_DIR=$PWD
 
 . setup.sh
@@ -18,6 +18,7 @@ declare -a param_list
 param_list=('instances_light_parameters_EPS0r'
              'instances_Z5_parameters_p_pu'
              'instances_light_parameters_pEIR_eow'
+	     'instances_P1_parameters_p_sum'
              'instances_Z5_parameters_p_sum'
              'instances_P1_parameters_p_qlcPPY'
              'instances_P1_parameters_p_qup'
@@ -66,13 +67,13 @@ p=$2 # parameter index
    
 #create fabm files with different parameters
        cd $BASE_DIR/FABM_YAML_ASSIMILATION_GENARATION
-       bash crea_param_1D.sh ${N_ENSEMBLE} ${param}
+       bash crea_param_1D.sh ${N_ENSEMBLE} ${param} ${WRKDIR}
        mv fabm_????.yaml $WRKDIR
    
 #create perturbations on forcings
        cd $WRKDIR
        cp gotm.yaml_ensemble_F2 gotm.yaml
-       eat-gotm-gen yaml gotm.yaml ${N_ENSEMBLE} -f fabm/yaml_file
+       eat-gotm-gen yaml gotm.yaml ${N_ENSEMBLE} -p surface/u10/scale_factor 0.20 -p surface/v10/scale_factor 0.20 -f fabm/yaml_file
        cp ${BASE_DIR}/runESTKF_template.py .
    
 #   done

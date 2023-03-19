@@ -38,7 +38,7 @@ def argument():
                             )
 
     parser.add_argument(   '--depth', '-d',
-                            type = str,
+                            type = float,
                             required = False,
                             help = 'max depth of observations'
                             )
@@ -62,7 +62,7 @@ floatid = args.floatid
 OUTDIR = addsep(args.outdir)
 
 if args.depth is not None:
-    depthLIM =  np.float(args.depth)
+    depthLIM =  args.depth
 else:
     depthLIM = 5000
 
