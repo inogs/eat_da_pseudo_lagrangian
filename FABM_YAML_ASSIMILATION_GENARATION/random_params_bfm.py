@@ -121,7 +121,7 @@ for nn in range(Nfabms):
         deltav = parametersDICT[pname][1]*0.5
 #       value = ((random()*2-1)*p+1) * centralvalue
 #       valuenp = ((np.random.uniform(0,1)*2-1)*p+1) * centralvalue
-        valuenp = np.random.uniform(low=nominalvalue-deltav, high=nominalvalue-deltav)
+        valuenp = np.random.uniform(low=nominalvalue-deltav, high=nominalvalue+deltav)
         if ii==ipert:
             print(pname)
             print(nominalvalue)

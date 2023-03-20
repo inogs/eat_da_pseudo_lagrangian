@@ -17,7 +17,11 @@ for test_dir in a:
     
     ref = datetime.datetime(2019, 1, 1, 0, 0, 0)
       
-    NCin=NC4.Dataset(filename,"r")
+    try:
+       NCin=NC4.Dataset(filename,"r")
+    except:
+       print("Corrupted file: ",filename)
+       continue
     #    (time, da_step, member, lat, lon)   
     PARAM=NCin.variables[prmtr_nm][:,1,:,0,0].filled()
     time=NCin.variables['time'][:].filled()

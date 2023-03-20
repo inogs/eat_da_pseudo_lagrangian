@@ -3,7 +3,7 @@
 #SBATCH --job-name=EAT_SPINUP
 #SBATCH -N1 -n 1
 #SBATCH --ntasks-per-node=1
-#SBATCH --time=2:00:00
+#SBATCH --time=0:10:00
 #SBATCH --mem=5gb
 #SBATCH --account=icei_Rosati
 #SBATCH --partition=g100_usr_prod

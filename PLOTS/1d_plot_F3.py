@@ -140,6 +140,6 @@ for test_dir in a[rank::nranks]:
     fig.text(0.04, 0.5, 'CHL-a Concentration [$mg$ $m^{-3}$]', va='center', rotation='vertical')
     floatname = test_dir.split('/')[5][:7]
     prmtr_nm  = test_dir.split('/')[5][8:][:-16]
-    fileout='chl_' + floatname  + '_' + prmtr_nm  + 'plot.png'
+    fileout='chl_' + floatname  + '_' + prmtr_nm  + '.png'
     fig.savefig(fileout, format='png',dpi=150, bbox_inches="tight")
     plt.close(fig)

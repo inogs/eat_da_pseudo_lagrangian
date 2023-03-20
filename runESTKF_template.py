@@ -69,8 +69,8 @@ experiment.add_plugin(eatpy.plugins.output.NetCDF(outfile))
 experiment.add_observations(var_profile,OBS_FILE_FLOAT)
 
 # Filter
-filter = eatpy.PDAF(eatpy.pdaf.FilterType.ESTKF, subtype=0, screen=2048,forget=0.95)
-#filter = eatpy.PDAF(eatpy.pdaf.FilterType.ESTKF, subtype=0, screen=2048,forget=1.0)
+#filter = eatpy.PDAF(eatpy.pdaf.FilterType.ESTKF, subtype=0, screen=2048,forget=0.95)
+filter = eatpy.PDAF(eatpy.pdaf.FilterType.ESTKF, subtype=0, screen=2048,forget=1.0)
 
 # Run
 experiment.run(filter)
