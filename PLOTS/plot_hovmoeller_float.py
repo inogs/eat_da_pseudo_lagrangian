@@ -66,6 +66,7 @@ from commons.Timelist import TimeInterval
 from instruments import superfloat as bio_float
 from basins.region import Rectangle
 from commons.utils import addsep
+import sys
 
 
 startTime = args.starttime
@@ -82,7 +83,10 @@ TI = TimeInterval(startTime, endTime)
 
 Allprofiles = bio_float.FloatSelector(var, TI, Rectangle(-6,36,30,46))
 
+print("Number of  " + var + " profiles: " + str(len(Allprofiles)) )
 
+if len(Allprofiles) == 0:
+    print("no profiles with " + var )
 
 depths_surf = [ii/10. for ii in range(25,2500,50)]
 depths_mid = [ii/10. for ii in range(2500,5000,100)]
@@ -109,33 +113,30 @@ for pp in Allprofiles:
         #print(pp.ID())
         plt.plot(ProfInterp,depths,':',color='grey')
 
-plt.plot(np.nanmean(np.array(MATP),axis=0),depths,'-',color='blue')
-plt.grid()
-plt.ylim(deplim,0)
-plt.title(var + ' ' + floatid)
+print("Number of  " + var + " profiles: " + str(len(MATP)) + " with float " + str(floatid))
 
-plt.tight_layout()
+if len(MATP) > 0:
+   plt.plot(np.nanmean(np.array(MATP),axis=0),depths,'-',color='blue')
+   plt.grid()
+   plt.ylim(deplim,0)
+   plt.title(var + ' ' + floatid)
 
+   plt.tight_layout()
+   plt.savefig(OUTDIR + '/allprofiles_' + var + floatid + '.png')
 
-plt.savefig(OUTDIR + '/allprofiles_' + var + floatid + '.png')
+   plt.figure(figsize=[11,5])
 
+   xd, yd = np.meshgrid(dates,depths)
+   plt.pcolormesh(xd,yd,np.array(MATP).T,vmin=vmin,vmax=vmax,shading='auto')
+   plt.ylim(deplim,0)
+   plt.colorbar()
 
-plt.figure(figsize=[11,5])
+   plt.gcf().autofmt_xdate()
+   plt.title(var + ' ' + floatid)
 
+   plt.tight_layout()
 
-xd, yd = np.meshgrid(dates,depths)
-plt.pcolormesh(xd,yd,np.array(MATP).T,vmin=vmin,vmax=vmax,shading='auto')
-plt.ylim(300,0)
-plt.colorbar()
-
-plt.gcf().autofmt_xdate()
-plt.title(var + ' ' + floatid)
-
-plt.tight_layout()
-
-
-plt.savefig(OUTDIR + '/hovm_' + var + '_' + floatid + '.png')
+   plt.savefig(OUTDIR + '/hovm_' + var + '_' + floatid + '.png')
 
 
-#plt.show(block=False)
 
