@@ -191,7 +191,6 @@ for iix,infile in enumerate(LISTresults):
                 vvElement = ('_').join(vvElementList)
                 if len(vvElement)==lenElement:
                     if varElement in vv[-lenElement:]:
-                        print(vv)
                         LISTvars.append(vv)
 
         var2plot = np.zeros((nT,nZ))
@@ -202,81 +201,14 @@ for iix,infile in enumerate(LISTresults):
             var2plot = var2plot + NCin.variables[vg][:,:,0,0].data
        
 
-#    if doline==True:
-#        var2plot_lines = {}
-#        LISTvarlines = []
-#        varGroupL = varline.split('_')[0]
-#        lenGroupL = len(varGroupL)
-#        varElementListL = varline.split('_')[1:]
-#        varElementL = ('_').join(varElementListL)
-#        lenElementL = len(varElementL)
-#        for vv in AllVars:
-#            if varGroupL in vv[:lenGroupL]:
-#                vvElementListL = vv.split('_')[1:]
-#                vvElementL = ('_').join(vvElementListL)
-#                if len(vvElementL)==lenElementL:
-#                    if varElementL in vv[-lenElementL:]:
-#                        LISTvarlines.append(vv)
-
-#        if len(LISTvarlines)<1:
-#            raise ValueError('Variables for line not found in %s for %s' %(infile,varline))
-#        for vg in LISTvarlines:
-#            print ('Plotting contour for %s' %(vg,))
-#            var2plot_lines[vg] = NCin.variables[vg][:,:,0,0].data
-
-
     NCin.close()
 
 
 
-        #axs = avaxs[iix]
-        #plt.sca(axs)
     var2plotT = np.transpose(var2plot)
     var_mean += var2plotT
     var_mean_2 += var2plotT**2
     x,y = np.meshgrid(pltdates.date2num(date_list),depth[0,:])
-        #if (varmin==None) & (varmax==None):
-        #    cax=axs.pcolormesh(x,y,var2plotT,shading='auto')
-        #else:
-        #    if varmin==None:
-        #       cax=axs.pcolormesh(x,y,var2plotT,vmax=varmax,shading='auto')
-        #    elif varmax==None:
-        #       cax=axs.pcolormesh(x,y,var2plotT,vmin=varmin,shading='auto')
-        #    else:
-        #       cax=axs.pcolormesh(x,y,var2plotT,vmin=varmin,vmax=varmax,shading='auto')
-
-        #if doline:
-        #    for vv in LISTvarlines:
-        #        var2plot_linesT = np.transpose(var2plot_lines[vv])
-        #        caxl = axs.contour(x,y,var2plot_linesT,[float(linevalue)],colors='w')
-
-        #axs.xaxis_date()
-
-        #axs.set_ylim([-deplim,0])
-        #axs.set_xlim([x[0,0],x[0,365]])
-        #if iix==Naxs-1:
-        #    axs.set_xlabel('Time')
-        #if iix==int(Naxs/2):
-        #    axs.set_ylabel('Depth [m]')
-        #cbar = fig.colorbar(cax)
-        #plt.colorbar(cax)
-
-        #iiens = iix+ind_start
-        #if doline:
-        #    plt.title('%s - line is %s at %s - %s' %(var,varline,linevalue,iiens),fontsize=8)
-        #else:
-        #    plt.title('%s - %s ' %(var,iiens),fontsize=8)
-    #fig.autofmt_xdate()
-    #plt.tight_layout()
-
-#fileout='prova.png'
-    #if doline:
-    #    nomefile = 'Hov_' + var + '_' + varline + args.depth + np.str(iif) + '.png'
-    #else:
-    #    nomefile = 'Hov_' + var + args.depth + np.str(iif) + '.png'
-    #fileout = OUTDIR + '/' + nomefile
-    #fig.savefig(fileout, format='png',dpi=150, bbox_inches="tight")
-
 
 var_mean = var_mean/Nresults
 var_mean_2 = var_mean_2/Nresults
@@ -294,7 +226,6 @@ else:
     elif varmax==None:
         plt.pcolormesh(x,y,var_mean,vmin=varmin,shading='auto')
     else:
-        print('here')
         plt.pcolormesh(x,y,var_mean,vmin=varmin,vmax=varmax,shading='auto')
 
 axs.xaxis_date()
