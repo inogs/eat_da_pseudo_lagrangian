@@ -151,7 +151,8 @@ for ii,filein in enumerate(TL.filelist):
     if (CHL[jP,iP]<0) | (CHL[jP,iP]>1.e+19): continue
     print(datefile)
     obsLIST.append(CHL[jP,iP])
-    dateobsLIST.append(datefile.strftime('%Y-%m-%d %H:%M:%S'))
+    pp = datefile.replace(hour=12,minute=0,second=0)
+    dateobsLIST.append(pp.strftime('%Y-%m-%d %H:%M:%S'))
     dateobjLIST.append(TL.Timelist[ii])
 #   errstr = CHL[jP,iP]*0.1
 #   errstr = np.log10(1.0+0.3)
