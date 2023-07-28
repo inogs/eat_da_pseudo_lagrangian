@@ -135,6 +135,7 @@ fileout = OUTDIR + '/profile_' + var + '.obs'
 f = open(fileout,'w')
 
 f.writelines(LINES)
+f.close()
 
 fileout = OUTDIR + '/surf_' + var + '.obs'
 f = open(fileout,'w')
