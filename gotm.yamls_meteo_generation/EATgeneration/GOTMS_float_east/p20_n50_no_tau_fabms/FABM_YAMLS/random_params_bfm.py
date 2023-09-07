@@ -1,1 +1,0 @@
-/g100_scratch/userexternal/ateruzzi/EAT_DA/gotm.yamls_meteo_generation/EATgeneration/random_params_bfm.py

@@ -1,1 +1,0 @@
-/g100/home/userexternal/ateruzzi/EAT_DA/gotm.yamls_meteo_generation/EATgeneration/setting_parameters_red.py
