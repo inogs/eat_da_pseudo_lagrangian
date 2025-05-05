@@ -50,13 +50,13 @@ args = argument()
 
 import numpy as np
 
-from commons.mask import Mask
-from commons.utils import addsep
-from commons.Timelist import TimeList, TimeInterval
-from Sat import SatManager as Sat
-from instruments.superfloat import FloatSelector
-from instruments.var_conversions import SUPERFLOAT_VARS
-from basins.region import Rectangle
+from bitsea.commons.mask import Mask
+from bitsea.commons.utils import addsep
+from bitsea.commons.Timelist import TimeList, TimeInterval
+from bitsea.Sat import SatManager as Sat
+from bitsea.instruments.superfloat import FloatSelector
+from bitsea.instruments.var_conversions import SUPERFLOAT_VARS
+from bitsea.basins.region import Rectangle
 from scipy import spatial
 
 
@@ -64,7 +64,7 @@ INOBS = addsep(args.indir)
 OUTDIR = addsep(args.outdir)
 
 maskfile = args.maskfile
-TheMask = Mask(maskfile)
+TheMask = Mask.from_file(maskfile)
 
 
 lonB = 0.
@@ -72,12 +72,12 @@ latB = 0.
 
 
 
-#iP,jP = TheMask.convert_lon_lat_to_indices(lonB,latB)
+#iP,jP = TheMask.convert_lon_lat_to_indices(lon=lonB,lat=latB)
 
 
 TI = TimeInterval("2018","2022",'%Y')
 
-TL = TimeList.fromfilenames(TI,INOBS,"*v02.nc",prefix='',dateformat='%Y%m%d')
+TL = TimeList.fromfilenames(TI,INOBS,"*P1D.nc",prefix='',dateformat='%Y%m%d')
 
 #import float
 
@@ -120,6 +120,7 @@ for ff in FLOATlist:
     FLOATlon[ff] = [LONprofs[i] for i in indices]
     FLOATlat[ff] = [LATprofs[i] for i in indices]
     FLOATtimes[ff] = [DATEprofs[i] for i in indices]
+    print(len(indices))
 
 
 
@@ -145,7 +146,7 @@ for ii,filein in enumerate(TL.filelist):
         if (ft.date() >= datefile.date()) & (ft.date()<=TL.Timelist[-1].date()):
             lonB = FLOATlon[floatname][ift]
             latB = FLOATlat[floatname][ift]
-            iP,jP = TheMask.convert_lon_lat_to_indices(lonB,latB)
+            iP,jP = TheMask.convert_lon_lat_to_indices(lon=lonB,lat=latB)
             break
     if lonB==0: continue
     if (CHL[jP,iP]<0) | (CHL[jP,iP]>1.e+19): continue

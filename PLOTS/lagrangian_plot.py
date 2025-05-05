@@ -1,13 +1,13 @@
 import numpy as np
 import pandas as pd
 
-from commons.mask import Mask
-from commons.utils import addsep
-from commons.Timelist import TimeList, TimeInterval
-from Sat import SatManager as Sat
-from instruments.superfloat import FloatSelector
-from instruments.var_conversions import SUPERFLOAT_VARS
-from basins.region import Rectangle
+from bitsea.commons.mask import Mask
+from bitsea.commons.utils import addsep
+from bitsea.commons.Timelist import TimeList, TimeInterval
+from bitsea.Sat import SatManager as Sat
+from bitsea.instruments.superfloat import FloatSelector
+from bitsea.instruments.var_conversions import SUPERFLOAT_VARS
+from bitsea.basins.region import Rectangle
 from scipy import spatial
 
 
@@ -76,7 +76,7 @@ for pp in params_list.keys():
         import matplotlib.pyplot as plt
         
         maskfile = '/g100_scratch/userexternal/ateruzzi/MASK24_REA/meshmask.nc'
-        TheMask = Mask(maskfile)
+        TheMask = Mask.from_file(maskfile)
         _,jpj,jpi = TheMask.shape
         
         maskcoast = np.zeros((jpj,jpi))

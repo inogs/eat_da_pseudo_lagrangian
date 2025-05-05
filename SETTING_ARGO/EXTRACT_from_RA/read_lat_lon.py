@@ -76,17 +76,17 @@ args = argument()
 import numpy as np
 import datetime
 import netCDF4 as NC
-from commons import netcdf4
-from commons.utils import addsep
+from bitsea.commons import netcdf4
+from bitsea.commons.utils import addsep
 
 #### import float data
 
-from instruments.superfloat import FloatSelector
-from instruments.var_conversions import SUPERFLOAT_VARS
+from bitsea.instruments.superfloat import FloatSelector
+from bitsea.instruments.var_conversions import SUPERFLOAT_VARS
 
-from commons.mask import Mask
-from commons.time_interval import TimeInterval
-from basins.region import Rectangle
+from bitsea.commons.mask import Mask
+from bitsea.commons.time_interval import TimeInterval
+from bitsea.basins.region import Rectangle
 from scipy import spatial
 
 DATESTART = args.datestart

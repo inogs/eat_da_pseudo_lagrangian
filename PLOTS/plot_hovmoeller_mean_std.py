@@ -75,8 +75,8 @@ import glob
 import os
 from matplotlib.colors import LogNorm
 from datetime import timedelta
-from commons.utils import addsep
-from commons.Timelist import TimeList
+from bitsea.commons.utils import addsep
+from bitsea.commons.Timelist import TimeList
 
 
 #ref = datetime.datetime(2016, 1, 1, 0, 0, 0)

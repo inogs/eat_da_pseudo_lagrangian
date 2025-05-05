@@ -3,9 +3,9 @@ import numpy as np
 from instruments.superfloat import FloatSelector
 from instruments.var_conversions import SUPERFLOAT_VARS
 
-from commons.mask import Mask
-from commons.time_interval import TimeInterval
-from basins.region import Rectangle
+from bitsea.commons.mask import Mask
+from bitsea.commons.time_interval import TimeInterval
+from bitsea.basins.region import Rectangle
 
 
 DATESTART = '20190101'
@@ -60,7 +60,7 @@ for ff in FLOATlist:
 import matplotlib.pyplot as plt
 
 maskfile = '/g100_scratch/userexternal/ateruzzi/MASK24_REA/meshmask.nc'
-TheMask = Mask(maskfile)
+TheMask = Mask.from_file(maskfile)
 _,jpj,jpi = TheMask.shape
 
 maskcoast = np.zeros((jpj,jpi))

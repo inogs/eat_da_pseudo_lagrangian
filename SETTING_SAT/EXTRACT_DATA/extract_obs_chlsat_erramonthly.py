@@ -56,17 +56,17 @@ args = argument()
 
 import numpy as np
 
-from commons.mask import Mask
-from commons.utils import addsep
-from commons.Timelist import TimeList, TimeInterval
-from Sat import SatManager as Sat
+from bitsea.commons.mask import Mask
+from bitsea.commons.utils import addsep
+from bitsea.commons.Timelist import TimeList, TimeInterval
+from bitsea.Sat import SatManager as Sat
 
 INOBS = addsep(args.indir)
 VARSATDIR = addsep(args.invar)
 OUTDIR = addsep(args.outdir)
 
 maskfile = args.maskfile
-TheMask = Mask(maskfile)
+TheMask = Mask.from_file(maskfile)
 
 
 lonB = float(args.lon)
@@ -74,12 +74,12 @@ latB = float(args.lat)
 
 
 
-iP,jP = TheMask.convert_lon_lat_to_indices(lonB,latB)
+iP,jP = TheMask.convert_lon_lat_to_indices(lon=lonB,lat=latB)
 
 
 TI = TimeInterval("2018","2022",'%Y')
 
-TL = TimeList.fromfilenames(TI,INOBS,"*v02.nc",prefix='',dateformat='%Y%m%d')
+TL = TimeList.fromfilenames(TI,INOBS,"*P1D.nc",prefix='',dateformat='%Y%m%d')
 
 
 err0 = float(args.merr) #mult

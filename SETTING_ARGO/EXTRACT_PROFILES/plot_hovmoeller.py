@@ -44,10 +44,10 @@ args = argument()
 import numpy as np
 import matplotlib.pyplot as plt
 
-from commons.Timelist import TimeInterval
-from instruments import superfloat as bio_float
-from basins.region import Rectangle
-from commons.utils import addsep
+from bitsea.commons.Timelist import TimeInterval
+from bitsea.instruments import superfloat as bio_float
+from bitsea.basins.region import Rectangle
+from bitsea.commons.utils import addsep
 
 
 startTime = args.starttime

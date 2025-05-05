@@ -49,10 +49,10 @@ args = argument()
 
 import numpy as np
 
-from commons.Timelist import TimeInterval
-from instruments import superfloat as bio_float
-from basins.region import Rectangle
-from commons.utils import addsep
+from bitsea.commons.Timelist import TimeInterval
+from bitsea.instruments import superfloat as bio_float
+from bitsea.basins.region import Rectangle
+from bitsea.commons.utils import addsep
 
 
 startTime = args.starttime
@@ -62,7 +62,7 @@ floatid = args.floatid
 OUTDIR = addsep(args.outdir)
 
 if args.depth is not None:
-    depthLIM =  np.float(args.depth)
+    depthLIM =  float(args.depth)
 else:
     depthLIM = 5000
 

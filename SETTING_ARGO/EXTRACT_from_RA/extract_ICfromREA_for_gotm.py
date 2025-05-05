@@ -78,9 +78,9 @@ import numpy as np
 import datetime
 #import netCDF4 as NC
 #from commons import netcdf4
-from commons.utils import addsep
-from commons.dataextractor import DataExtractor
-from commons.mask import Mask
+from bitsea.commons.utils import addsep
+from bitsea.commons.dataextractor import DataExtractor
+from bitsea.commons.mask import Mask
 import matplotlib.pylab as plt
 
 INDIR = addsep(args.indir)
@@ -91,7 +91,7 @@ latP = float(args.lat)
 OUTDIR = addsep(args.outdir)
 
 datestr = args.date
-TheMask = Mask(args.maskfile)
+TheMask = Mask.from_file(args.maskfile)
 zfile = args.zfile
 depth = float(args.depth)
 
@@ -126,7 +126,7 @@ depthLIST.append(dzLIST[0])
 for k in range(len(dzLIST)-1):
     depthLIST.append(dzLIST[k+1] +depthLIST[k])
 
-indlon,indlat = TheMask.convert_lon_lat_to_indices(lonP,latP)
+indlon,indlat = TheMask.convert_lon_lat_to_indices(lon=lonP,lat=latP)
 for var in varLIST:
 #for var in [varLIST[0]]:
     print(var)

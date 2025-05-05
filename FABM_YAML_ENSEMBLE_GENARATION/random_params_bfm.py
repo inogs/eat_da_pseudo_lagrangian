@@ -22,8 +22,8 @@ args = argument()
 
 import numpy as np
 from setting_parameters import parametersDICT
-from commons.utils import addsep
-from commons.utils import file2stringlist
+from bitsea.commons.utils import addsep
+from bitsea.commons.utils import file2stringlist
 from random import random, seed
 
 
